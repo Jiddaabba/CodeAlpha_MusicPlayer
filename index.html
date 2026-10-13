@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="JiddaBeats — your sound, your space. A responsive music player.">
+  <title>JiddaBeats — Your Sound, Your Space</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="JiddaBeats home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span><strong>JiddaBeats</strong><small>Your Sound. Your Space.</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="home"><span>⌂</span> Home</button>
+        <button class="nav-link" data-view="discover"><span>⌕</span> Discover</button>
+        <button class="nav-link" data-view="library"><span>▤</span> Library</button>
+        <button class="nav-link" data-view="favorites"><span>♡</span> Favorites <b class="nav-count" id="favoriteCount">0</b></button>
+        <button class="nav-link" data-view="playlists"><span>☷</span> Playlists</button>
+      </nav>
+      <div class="side-heading">YOUR PLAYLISTS <button id="createPlaylistSide" title="Create playlist" aria-label="Create playlist">＋</button></div>
+      <div class="sidebar-playlists" id="sidebarPlaylists"></div>
+      <button class="nav-link settings-link" id="themeSide"><span>☼</span> Toggle appearance</button>
+      <div class="sidebar-note"><span class="note-dot"></span> Music for every moment</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open navigation menu">☰</button>
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="Search songs, artists, albums..." autocomplete="off" aria-label="Search songs, artists, albums">
+          <kbd> / </kbd>
+        </label>
+        <div class="top-actions">
+          <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme">☾</button>
+          <button class="icon-btn" id="queueToggle" aria-label="Show play queue" title="Play queue">☷</button>
+          <button class="avatar" aria-label="JiddaBeats profile">JB</button>
+        </div>
+      </header>
+
+      <section class="hero" id="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">YOUR DAILY SOUNDTRACK</span>
+          <h1>Feel the music,<br><span>live the moment.</span></h1>
+          <p>Discover new sounds, build your playlists, and enjoy your favorite music anytime.</p>
+          <button class="primary-btn" id="heroPlay"><span>▶</span> Play a mix</button>
+        </div>
+        <div class="hero-art" role="img" aria-label="Neon music inspired artwork">
+          <div class="hero-orb"></div>
+          <div class="hero-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="hero-script">Music<br>connects<br>us.</span>
+        </div>
+        <div class="hero-glow"></div>
+      </section>
+
+      <section class="content-section hidden" id="discoverSection">
+        <div class="section-heading"><div><span class="eyebrow">BEYOND YOUR PLAYLISTS</span><h2>Explore the music world</h2></div><span class="subtle-label">Searchable preview catalogue</span></div>
+        <p class="discover-note">Search for artists, songs, albums, Afrobeats, R&amp;B and more. Previews come from the iTunes Search API; full-track availability depends on the rights holder.</p>
+        <div class="genre-chips" aria-label="Popular discovery searches">
+          <button class="genre-chip" data-discover-query="Afrobeats">Afrobeats</button><button class="genre-chip" data-discover-query="Amapiano">Amapiano</button><button class="genre-chip" data-discover-query="R&B">R&amp;B</button><button class="genre-chip" data-discover-query="Hip Hop">Hip Hop</button><button class="genre-chip" data-discover-query="Gospel">Gospel</button><button class="genre-chip" data-discover-query="Chill">Chill</button>
+        </div>
+        <div class="discover-status" id="discoverStatus" role="status">Choose a genre or search for a song or artist above.</div>
+        <div class="discover-grid" id="discoverGrid"></div>
+        <div class="discover-actions"><label class="secondary-btn import-audio-label" for="localAudioInput">＋ Add music from this device</label><input id="localAudioInput" type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.aac" multiple hidden><span class="subtle-label">Personal audio files stay in this browser session.</span></div>
+      </section>
+      <section class="content-section" id="featuredSection">
+        <div class="section-heading"><div><span class="eyebrow">MADE FOR YOUR MOOD</span><h2>Featured playlists</h2></div><button class="text-btn" data-view="playlists">View all <span>↗</span></button></div>
+        <div class="playlist-grid" id="playlistGrid"></div>
+      </section>
+
+      <section class="content-section" id="tracksSection">
+        <div class="section-heading"><div><span class="eyebrow" id="trackEyebrow">KEEP THE VIBE GOING</span><h2 id="trackHeading">Recently played</h2></div><span class="subtle-label" id="trackSubheading">Your rotation</span></div>
+        <div class="track-list" id="trackList"></div>
+        <div class="empty-state hidden" id="emptyState"><span>♫</span><h3>Nothing found just yet</h3><p>Try another search or explore the full music library.</p><button class="secondary-btn" id="clearSearch">Clear search</button></div>
+      </section>
+      <section class="content-section hidden" id="playlistDetailSection">
+        <div class="section-heading"><div><span class="eyebrow">YOUR COLLECTION</span><h2 id="playlistDetailTitle">Playlist</h2></div><button class="secondary-btn" id="addTracksBtn">＋ Add current song</button></div>
+        <p class="playlist-detail-description" id="playlistDetailDescription"></p>
+        <div class="track-list" id="playlistDetailTracks"></div>
+      </section>
+      <footer class="site-footer"><span class="footer-brand">♫ JiddaBeats</span><span>Made for the love of music.</span><span>© <span id="year"></span> JiddaBeats</span></footer>
+    </main>
+  </div>
+
+  <aside class="queue-panel" id="queuePanel" aria-label="Play queue" aria-hidden="true">
+    <div class="queue-head"><div><span class="eyebrow">UP NEXT</span><h2>Play queue</h2></div><button class="icon-btn" id="closeQueue" aria-label="Close queue">×</button></div>
+    <div id="queueList" class="queue-list"></div>
+  </aside>
+  <div class="mobile-scrim" id="mobileScrim"></div>
+
+  <section class="player-bar" aria-label="Music player">
+    <div class="now-playing">
+      <img id="currentCover" src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=160&q=80" alt="Current track artwork">
+      <div class="now-meta"><strong id="currentTitle">Choose a track</strong><span id="currentArtist">Your next favorite is waiting</span></div>
+      <button class="heart-btn" id="currentFavorite" aria-label="Add current track to favorites" title="Favorite">♡</button>
+    </div>
+    <div class="player-center">
+      <div class="player-controls">
+        <button class="control-btn small-control" id="shuffleBtn" aria-label="Toggle shuffle" title="Shuffle">⤨</button>
+        <button class="control-btn" id="previousBtn" aria-label="Previous track" title="Previous">◀|</button>
+        <button class="play-btn" id="playBtn" aria-label="Play" title="Play">▶</button>
+        <button class="control-btn" id="nextBtn" aria-label="Next track" title="Next">|▶</button>
+        <button class="control-btn small-control" id="repeatBtn" aria-label="Toggle repeat" title="Repeat">↻</button>
+      </div>
+      <div class="timeline"><span id="currentTime">0:00</span><input id="progressBar" type="range" min="0" max="1000" value="0" aria-label="Track progress"><span id="duration">0:00</span></div>
+    </div>
+    <div class="player-extras">
+      <button class="control-btn volume-icon" id="muteBtn" aria-label="Mute" title="Mute">◖))</button>
+      <input id="volumeBar" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Volume">
+      <button class="control-btn extra-action" id="downloadBtn" aria-label="Download current track" title="Download track">⇩</button>
+      <button class="control-btn extra-action" id="shareBtn" aria-label="Share current track" title="Share track">↗</button>
+      <button class="control-btn desktop-queue" id="queueToggleBottom" aria-label="Open queue" title="Queue">☷</button>
+      <div class="mini-visualizer" id="miniVisualizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <audio id="audio" preload="metadata"></audio>
+  </section>
+
+  <dialog id="playlistDialog" class="playlist-dialog">
+    <form method="dialog" id="playlistForm">
+      <button class="dialog-close" value="cancel" aria-label="Close dialog">×</button>
+      <span class="eyebrow">MAKE IT YOURS</span>
+      <h2>Create a playlist</h2>
+      <p>Give your collection a name and add the track you're listening to.</p>
+      <label class="form-label" for="playlistName">Playlist name</label>
+      <input id="playlistName" class="form-input" maxlength="40" placeholder="Late night favorites" required>
+      <div class="dialog-actions"><button class="secondary-btn" value="cancel">Cancel</button><button class="primary-btn" id="savePlaylistBtn" value="default">Create playlist</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
